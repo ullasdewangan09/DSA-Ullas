@@ -1,0 +1,608 @@
+Q.11 Mr. Ram is developing a software application to manage his
+inventory, which initially can hold a maximum of ten product
+packets. He allocates memory for ten packets at the start.
+However, as the market demand changes, he needs to dynamically
+update the allocated memory to store more or fewer packets
+without wasting memory or running out
+of space. Explain the concept of dynamic memory
+allocation and how Mr. Ram can effectively
+manage his inventory size using this concept.
+
+C code 
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int initial_size = 10; // Initial size of inventory
+    int new_size;
+    int *inventory;
+
+    // Allocate memory for initial inventory
+    inventory = (int *)malloc(initial_size * sizeof(int));
+    if (inventory == NULL) {
+        printf("Memory allocation failed!\n");
+        return 1;
+    }
+
+    // Initialize inventory
+    for (int i = 0; i < initial_size; i++) {
+        inventory[i] = i + 1; // Example initialization
+    }
+
+    // Print initial inventory
+    printf("Initial inventory:\n");
+    for (int i = 0; i < initial_size; i++) {
+        printf("Packet %d: %d\n", i + 1, inventory[i]);
+    }
+
+    // Change the inventory size dynamically
+    printf("Enter new inventory size: ");
+    scanf("%d", &new_size);
+
+    // Reallocate memory to new size
+    inventory = (int *)realloc(inventory, new_size * sizeof(int));
+    if (inventory == NULL) {
+        printf("Memory reallocation failed!\n");
+        return 1;
+    }
+
+    // Initialize new packets if size increased
+    if (new_size > initial_size) {
+        for (int i = initial_size; i < new_size; i++) {
+            inventory[i] = 0; // Example initialization
+        }
+    }
+
+    // Print updated inventory
+    printf("Updated inventory:\n");
+    for (int i = 0; i < new_size; i++) {
+        printf("Packet %d: %d\n", i + 1, inventory[i]);
+    }
+
+    // Free allocated memory
+    free(inventory);
+
+    return 0;
+}
+
+________________________________________________________________________________________________
+
+Q.12 Mr. John is playing the game Subway Surfers. The game has
+a total of five treasures with different weights, that he needs
+to collect. Write a C program to count the total number of
+weights he collected from the treasures during the game.
+
+Code:
+
+#include <stdio.h>
+
+int main() {
+    // Define the number of treasures
+    const int numberOfTreasures = 5;
+    
+    // Define an array to hold the weights of the treasures
+    int weights[numberOfTreasures];
+    
+    // Variable to store the total weight collected
+    int totalWeight = 0;
+
+    // Input weights for each treasure
+    printf("Enter the weights of %d treasures:\n", numberOfTreasures);
+    for (int i = 0; i < numberOfTreasures; i++) {
+        printf("Weight of treasure %d: ", i + 1);
+        scanf("%d", &weights[i]);
+    }
+
+    // Calculate the total weight
+    for (int i = 0; i < numberOfTreasures; i++) {
+        totalWeight += weights[i];
+    }
+
+    // Print the total weight collected
+    printf("Total weight collected: %d\n", totalWeight);
+
+    return 0;
+}
+___________________________________________________________________________________________
+
+Q.13 Consider an object Shape that encompasses both a Square
+and a Rectangle as the data members. The Square object should
+have an attribute for its area, while the Rectangle object
+should have attributes for length and breadth. Identify the
+most suitable data structures for this scenario and write a C
+program to define the structure and demonstrate their usage.
+
+Code :
+
+#include <stdio.h>
+
+// Define the structure for Square
+struct Square {
+    int area;
+};
+
+// Define the structure for Rectangle
+struct Rectangle {
+    int length;
+    int breadth;
+};
+
+// Define the structure for Shape that contains a Square and a Rectangle
+struct Shape {
+    struct Square square;
+    struct Rectangle rectangle;
+};
+
+int main() {
+    // Create an instance of Shape
+    struct Shape shape;
+
+    // Assign values to the square's area and rectangle's dimensions
+    shape.square.area = 25;         // Example area of square
+    shape.rectangle.length = 10;    // Example length of rectangle
+    shape.rectangle.breadth = 5;    // Example breadth of rectangle
+
+    // Perform an operation: Calculate and display the perimeter of the rectangle
+    int perimeter = 2 * (shape.rectangle.length + shape.rectangle.breadth);
+    printf("Square Area: %d\n", shape.square.area);
+    printf("Rectangle Length: %d, Breadth: %d\n", shape.rectangle.length, shape.rectangle.breadth);
+    printf("Rectangle Perimeter: %d\n", perimeter);
+
+    return 0;
+}
+__________________________________________________________________________________________________
+
+Q.14 In a classroom, the teacher wants to create a list of
+students who have submitted their assignments. As students
+submit their work, the teacher needs to add each student's name
+to the list in the order of submission. Help the teacher by
+guiding them on how to use a proper data structure to insert
+each student's name into the list as they submit their
+assignment. Write a C program that uses an array to manage the
+list and demonstrates how to insert new student names into the
+array.
+
+Code:
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_STUDENTS 100
+#define NAME_LENGTH 50
+
+int main() {
+    char studentList[MAX_STUDENTS][NAME_LENGTH];
+    int studentCount = 0;
+    char studentName[NAME_LENGTH];
+
+    while (studentCount < MAX_STUDENTS) {
+        printf("Enter student name (or 'exit' to stop): ");
+        gets(studentName);
+
+        if (strcmp(studentName, "exit") == 0) {
+            break;
+        }
+
+        strcpy(studentList[studentCount], studentName);
+        studentCount++;
+    }
+
+    printf("\nList of students who have submitted their assignments:\n");
+    for (int i = 0; i < studentCount; i++) {
+        printf("%d. %s\n", i + 1, studentList[i]);
+    }
+
+    return 0;
+}
+____________________________________________________________________________________________
+
+Q.15 Students need to check the availability of a book in the
+library based on its ID. Create an ordered list which will
+contain only book id. Implement a C program to search whether a
+particular book is available in the list or not.
+
+Code:
+#include <stdio.h>
+
+int binarySearch(int arr[], int size, int key) {
+    int low = 0, high = size - 1;
+    
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        
+        if (arr[mid] == key) {
+            return mid;
+        }
+        if (arr[mid] < key) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+    
+    return -1;
+}
+
+int main() {
+    int bookList[] = {101, 203, 305, 407, 509}; // Ordered list of book IDs
+    int size = sizeof(bookList) / sizeof(bookList[0]);
+    int bookID;
+
+    printf("Enter the book ID to search: ");
+    scanf("%d", &bookID);
+
+    int result = binarySearch(bookList, size, bookID);
+
+    if (result != -1) {
+        printf("Book ID %d is available in the library.\n", bookID);
+    } else {
+        printf("Book ID %d is not available in the library.\n", bookID);
+    }
+
+    return 0;
+}
+_____________________________________________________________________________________________________
+
+Q.16 A = ⌊3 4 2 4 ⌋ B =⌊ 1 2 3 4 ⌋
+Write a C program to perform Matrix addition for the above two
+matrices.
+
+Code:
+#include <stdio.h>
+
+int main() {
+    int A[2][2] = {{3, 4}, {2, 4}};
+    int B[2][2] = {{1, 2}, {3, 4}};
+    int C[2][2];
+
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            C[i][j] = A[i][j] + B[i][j];
+        }
+    }
+
+    printf("Resultant Matrix after addition:\n");
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            printf("%d ", C[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
+_____________________________________________________________________________________________
+
+Q.17(a) Create a structure for student data base with following
+members (Register number, Name, Age, CGPA). Write a C program
+to perform the following operations (i) Get user input for 5
+students record (ii) Find the student’s name with greatest
+CGPA. (Note: Find appropriate data structure and develop a C
+program).
+
+Code:
+#include <stdio.h>
+#include <string.h>
+
+struct Student {
+    int regNumber;
+    char name[50];
+    int age;
+    float cgpa;
+};
+
+int main() {
+    struct Student students[5];
+    int n = 5;
+    int index = 0;
+    float maxCGPA = 0.0;
+
+    // Get user input for 5 students
+    for (int i = 0; i < n; i++) {
+        printf("Enter details for student %d:\n", i + 1);
+        printf("Register Number: ");
+        scanf("%d", &students[i].regNumber);
+        printf("Name: ");
+        scanf(" %[^\n]s", students[i].name);  // to read string with spaces
+        printf("Age: ");
+        scanf("%d", &students[i].age);
+        printf("CGPA: ");
+        scanf("%f", &students[i].cgpa);
+        printf("\n");
+    }
+
+    // Find the student's name with the greatest CGPA
+    for (int i = 0; i < n; i++) {
+        if (students[i].cgpa > maxCGPA) {
+            maxCGPA = students[i].cgpa;
+            index = i;
+        }
+    }
+
+    printf("Student with the greatest CGPA:\n");
+    printf("Name: %s\n", students[index].name);
+    printf("Register Number: %d\n", students[index].regNumber);
+    printf("Age: %d\n", students[index].age);
+    printf("CGPA: %.2f\n", students[index].cgpa);
+
+    return 0;
+}
+________________________________________________________________________________________________________
+
+Q.17 (b) (i) Illustrate how asymptotic notations can be used to
+analyze an algorithm? (6Marks)
+(ii) Calculate time and space complexity for the
+following code (6Marks)
+#include<stdio.h>
+int main() {
+int i = 1, sum = 0, n;
+while (i<= n){
+i=i+1;
+sum = sum +i;
+}}
+
+solution:
+
+(i) Asymptotic Notations for Analyzing an Algorithm (6 Marks)
+Asymptotic notations are mathematical tools used to describe the
+behavior of an algorithm in terms of time and space as the input size
+grows. These notations allow us to analyze the efficiency and
+scalability of algorithms by focusing on their performance in the
+worst-case, best-case, and average-case scenarios.
+The most commonly used asymptotic notations are:
+1.Big O Notation (O):
+Represents the upper bound of an algorithm's running time. It
+gives the worst-case scenario, describing the maximum time an
+algorithm can take.
+Example: If an algorithm has a time complexity of
+O(n2)O(n^2)O(n2), it means that the running time increases
+quadratically with the input size.
+2.Omega Notation (Ω):
+Represents the lower bound of an algorithm's running time. It
+gives the best-case scenario, describing the minimum time an
+algorithm can take.
+Example: If an algorithm has a time complexity of Ω(n)Ω(n)Ω(n),
+it means that in the best case, the running time increases
+linearly with the input size.
+3.Theta Notation (Θ):
+Represents the tight bound of an algorithm's running time. It
+gives both the upper and lower bounds, indicating the exact
+growth rate of the algorithm's running time.
+Example: If an algorithm has a time complexity of Θ(nlog⁡n)Θ(n
+\log n)Θ(nlogn), it means that the running time grows at a rate
+proportional to nlog⁡nn \log nnlogn for all cases.
+Little o Notation (o):
+Represents a stricter upper bound than Big O. It shows that an
+algorithm's growth rate is strictly less than the rate described
+by the function.
+Example: If an algorithm has a time complexity of
+o(n2)o(n^2)o(n2), it means that the running time grows slower
+than n2n^2n2, but it doesn't exactly grow at n2n^2n2.
+Little Omega Notation (ω):
+Represents a stricter lower bound than Omega. It shows that an
+algorithm's growth rate is strictly greater than the rate
+described by the function.
+Example: If an algorithm has a time complexity of ω(n)ω(n)ω(n),
+it means that the running time grows faster than nnn.
+(ii) Time and Space Complexity of the Given Code
+#include<stdio.h>int main() {
+int i = 1, sum = 0, n;
+while (i <= n) {
+i = i + 1;
+sum = sum + i;
+}
+}
+Time Complexity:
+Initialization:
+The initialization of variables i = 1, sum = 0, and n takes
+constant time: O(1)O(1)O(1).
+While Loop:
+The while loop runs until i exceeds n. The loop's body executes
+for each value of i from 1 to n.
+Each iteration of the loop has two operations:
+i = i + 1; takes constant time: O(1)O(1)O(1).
+sum = sum + i; takes constant time: O(1)O(1)O(1).
+Therefore, the total time taken by the loop is the number of
+iterations multiplied by the time for each iteration, which is
+O(n)O(n)O(n).
+Overall Time Complexity:
+The overall time complexity of the code is O(n)O(n)O(n).
+Space Complexity:
+Variables:
+The variables i, sum, and n are all integer variables that
+occupy a constant amount of space: O(1)O(1)O(1).
+No Additional Data Structures:
+The code does not use any additional data structures like arrays
+or dynamic memory allocation that would require extra space.
+Overall Space Complexity:
+The overall space complexity of the code is O(1)O(1)O(1), as the
+space required does not depend on the input size nnn.
+_____________________________________________________________________________________________________
+
+Q.18(a) Given a number ‘n’, write an algorithm and the
+subsequent ‘C’ program to count the number of two-digit prime
+numbers in it when adjacent digits are taken. For example, if
+the value of ‘n’ is 114 then the two-digit numbers that can be
+formed by taking adjacent digits are 11 and 14. 11 is prime but
+14 is not. Therefore print 1.
+
+Code:
+#include <stdio.h>
+#include <string.h>
+
+// Function to check if a number is prime
+int isPrime(int num) {
+    if (num <= 1) return 0;
+    if (num <= 3) return 1;
+    if (num % 2 == 0 || num % 3 == 0) return 0;
+    for (int i = 5; i * i <= num; i += 6) {
+        if (num % i == 0 || num % (i + 2) == 0) return 0;
+    }
+    return 1;
+}
+
+int main() {
+    int n;
+    printf("Enter a number: ");
+    scanf("%d", &n);
+
+    // Convert the number to a string to process adjacent digits
+    char str[12]; // Assuming a maximum of 10 digits in the number
+    snprintf(str, sizeof(str), "%d", n);
+
+    int count = 0;
+    int length = strlen(str);
+
+    // Extract two-digit numbers and check for primality
+    for (int i = 0; i < length - 1; i++) {
+        int num = (str[i] - '0') * 10 + (str[i + 1] - '0');
+        if (isPrime(num)) {
+            count++;
+        }
+    }
+
+    // Print the count of prime two-digit numbers
+    printf("Number of two-digit prime numbers: %d\n", count);
+
+    return 0;
+}
+1.Prime Checking Function (isPrime):
+  This function determines if a number is prime. It efficiently
+  checks for factors up to the square root of the number,
+  improving performance over a naive approach.
+2.Main Function:
+  The number n is read and converted to a string for easy processing of digits.
+  Adjacent pairs of digits are extracted and converted into twodigit numbers.
+  Each two-digit number is checked for primality using the isPrime function.
+  The count of prime numbers is maintained and printed.
+Time Complexity:
+  Time Complexity: O(m⋅sqrt(k)) where m is the number of adjacent
+  digit pairs and k is the maximum two-digit number (99).
+  Space Complexity: O(m), where m is the length of the string
+  representation of the number.
+________________________________________________________________________________________________
+
+Q.18(b) Demonstrate the usage of list and perform all
+the possible operation using array with suitable
+examples.
+An array is a collection of elements of the same data type, stored at
+contiguous memory locations. Arrays allow us to perform various
+operations such as insertion, deletion, searching, and sorting.
+
+1. Creation and Initialization
+Code:
+#include <stdio.h>
+
+int main() {
+    // Create and initialize an array of integers
+    int arr[10] = {10, 20, 30, 40, 50}; // The first 5 elements are initialized
+
+    // Printing the array
+    printf("Array elements: ");
+    for(int i = 0; i < 5; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
+
+2. Insertion
+Code:
+#include <stdio.h>
+
+int main() {
+    int arr[10] = {10, 20, 30, 40, 50};
+    int n = 5;  // Current number of elements
+    int position = 2;  // Position where the new element will be inserted (0-based index)
+    int value = 25;    // New value to insert
+
+    // Shift elements to the right
+    for(int i = n; i > position; i--) {
+        arr[i] = arr[i - 1];
+    }
+
+    // Insert the new element
+    arr[position] = value;
+    n++;  // Increment the size of the array
+
+    // Printing the array after insertion
+    printf("Array after insertion: ");
+    for(int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
+
+3. Deletion
+Code:
+#include <stdio.h>
+
+int main() {
+    int arr[10] = {10, 20, 30, 40, 50};
+    int n = 5;  // Current number of elements
+    int position = 2;  // Position of the element to be deleted (0-based index)
+
+    // Shift elements to the left
+    for(int i = position; i < n - 1; i++) {
+        arr[i] = arr[i + 1];
+    }
+
+    n--;  // Decrement the size of the array
+
+    // Printing the array after deletion
+    printf("Array after deletion: ");
+    for(int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
+
+4. Traversal
+Code:
+#include <stdio.h>
+
+int main() {
+    int arr[5] = {10, 20, 30, 40, 50};
+    int n = 5;  // Number of elements
+
+    // Traversing and printing the array
+    printf("Array elements: ");
+    for(int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
+
+5.Searching
+Code:
+#include <stdio.h>
+
+int main() {
+    int arr[5] = {10, 20, 30, 40, 50};
+    int n = 5;  // Number of elements
+    int key = 30;  // Element to search for
+    int found = 0;
+
+    // Linear search
+    for(int i = 0; i < n; i++) {
+        if(arr[i] == key) {
+            found = 1;
+            printf("Element %d found at position %d\n", key, i);
+            break;
+        }
+    }
+
+    if(!found) {
+        printf("Element %d not found in the array.\n", key);
+    }
+
+    return 0;
+}
+__________________________________________________________________________________________________________
