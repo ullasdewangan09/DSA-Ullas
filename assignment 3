@@ -355,67 +355,67 @@ Represents the upper bound of an algorithm's running time. It
 gives the worst-case scenario, describing the maximum time an
 algorithm can take.
 Example: If an algorithm has a time complexity of
-O(n2)O(n^2)O(n2), it means that the running time increases
+O(n^2), it means that the running time increases
 quadratically with the input size.
 2.Omega Notation (Ω):
 Represents the lower bound of an algorithm's running time. It
 gives the best-case scenario, describing the minimum time an
 algorithm can take.
-Example: If an algorithm has a time complexity of Ω(n)Ω(n)Ω(n),
+Example: If an algorithm has a time complexity of Ω(n),
 it means that in the best case, the running time increases
 linearly with the input size.
 3.Theta Notation (Θ):
 Represents the tight bound of an algorithm's running time. It
 gives both the upper and lower bounds, indicating the exact
 growth rate of the algorithm's running time.
-Example: If an algorithm has a time complexity of Θ(nlog⁡n)Θ(n
-\log n)Θ(nlogn), it means that the running time grows at a rate
-proportional to nlog⁡nn \log nnlogn for all cases.
+Example: If an algorithm has a time complexity of Θ(nlog⁡n), it means that the running time grows at a rate
+proportional to nlog⁡n for all cases.
 Little o Notation (o):
 Represents a stricter upper bound than Big O. It shows that an
 algorithm's growth rate is strictly less than the rate described
 by the function.
 Example: If an algorithm has a time complexity of
-o(n2)o(n^2)o(n2), it means that the running time grows slower
-than n2n^2n2, but it doesn't exactly grow at n2n^2n2.
+o(n^2), it means that the running time grows slower
+than n^2, but it doesn't exactly grow at n^2.
 Little Omega Notation (ω):
 Represents a stricter lower bound than Omega. It shows that an
 algorithm's growth rate is strictly greater than the rate
 described by the function.
-Example: If an algorithm has a time complexity of ω(n)ω(n)ω(n),
+Example: If an algorithm has a time complexity of ω(n),
 it means that the running time grows faster than nnn.
 (ii) Time and Space Complexity of the Given Code
-#include<stdio.h>int main() {
-int i = 1, sum = 0, n;
-while (i <= n) {
-i = i + 1;
-sum = sum + i;
-}
+#include<stdio.h>
+int main() {
+    int i = 1, sum = 0, n;
+    while (i <= n) {
+        i = i + 1;
+        sum = sum + i;
+    }
 }
 Time Complexity:
 Initialization:
 The initialization of variables i = 1, sum = 0, and n takes
-constant time: O(1)O(1)O(1).
+constant time: O(1).
 While Loop:
 The while loop runs until i exceeds n. The loop's body executes
 for each value of i from 1 to n.
 Each iteration of the loop has two operations:
-i = i + 1; takes constant time: O(1)O(1)O(1).
-sum = sum + i; takes constant time: O(1)O(1)O(1).
+i = i + 1; takes constant time: O(1).
+sum = sum + i; takes constant time: O(1).
 Therefore, the total time taken by the loop is the number of
 iterations multiplied by the time for each iteration, which is
-O(n)O(n)O(n).
+O(n).
 Overall Time Complexity:
-The overall time complexity of the code is O(n)O(n)O(n).
+The overall time complexity of the code is O(n).
 Space Complexity:
 Variables:
 The variables i, sum, and n are all integer variables that
-occupy a constant amount of space: O(1)O(1)O(1).
+occupy a constant amount of space: O(1).
 No Additional Data Structures:
 The code does not use any additional data structures like arrays
 or dynamic memory allocation that would require extra space.
 Overall Space Complexity:
-The overall space complexity of the code is O(1)O(1)O(1), as the
+The overall space complexity of the code is O(1), as the
 space required does not depend on the input size nnn.
 _____________________________________________________________________________________________________
 
